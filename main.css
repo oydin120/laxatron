@@ -1,0 +1,490 @@
+/* Slot Box Ambient RGB Border Glow */
+@keyframes rgbBoxGlow {
+    0% {
+        box-shadow: 
+            0 0 12px rgba(255, 0, 85, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+        border-color: rgba(255, 0, 85, 0.45);
+    }
+    33% {
+        box-shadow: 
+            0 0 12px rgba(0, 229, 255, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+        border-color: rgba(0, 229, 255, 0.45);
+    }
+    66% {
+        box-shadow: 
+            0 0 12px rgba(0, 255, 128, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+        border-color: rgba(0, 255, 128, 0.45);
+    }
+    100% {
+        box-shadow: 
+            0 0 12px rgba(255, 0, 85, 0.3),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+        border-color: rgba(255, 0, 85, 0.45);
+    }
+}
+
+/* ========================================================
+   RESPONSIVENESS (MOBILE FRIENDLY)
+   ======================================================== */
+@media (max-width: 480px) {
+    .inner-box {
+        grid-template-columns: repeat(3, minmax(70px, 90px));
+        gap: 12px;
+        padding: 30px 18px;
+        border-radius: 24px;
+    }
+
+    .inner-box::before {
+        border-radius: 27px;
+    }
+
+    .inner-box::after {
+        border-radius: 32px;
+    }
+
+    .box {
+        width: 100%;
+        height: 85px;
+        border-radius: 16px;
+    }
+
+    .win1,
+    .win2,
+    .win3 {
+        font-size: 38px;
+    }
+
+    .SPIN {
+        width: 180px;
+        height: 48px;
+        font-size: 1.15rem;
+        letter-spacing: 4px;
+    }
+}
+/* Staggered idle bounce animation */
+.box:nth-child(1) .win1 {
+    animation: bounceIdle 2.6s ease-in-out infinite 0s;
+}
+
+.box:nth-child(2) .win2 {
+    animation: bounceIdle 2.6s ease-in-out infinite 0.35s;
+}
+
+.box:nth-child(3) .win3 {
+    animation: bounceIdle 2.6s ease-in-out infinite 0.7s;
+}
+
+.box:hover .win1,
+.box:hover .win2,
+.box:hover .win3 {
+    transform: scale(1.22) rotate(6deg);
+}
+
+/* ========================================================
+   SPIN BUTTON - CONTINUOUS RGB & PULSE ANIMATION
+   ======================================================== */
+.SPIN {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: 14px;
+    width: 220px;
+    height: 56px;
+    font-size: 1.35rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    outline: none;
+    user-select: none;
+    overflow: hidden;
+
+    /* Continuous RGB Gradient Background */
+    background: linear-gradient(
+        90deg,
+        #ff0055,
+        #ff7700,
+        #ffea00,
+        #00ff66,
+        #00e5ff,
+        #7928ca,
+        #ff0055
+    );
+    background-size: 300% 300%;
+
+    /* Continuous animations: RGB shift + breathing pulse */
+    animation: 
+        rgbShift 3.5s linear infinite,
+        buttonPulse 2.2s ease-in-out infinite;
+
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.2s ease, letter-spacing 0.2s ease;
+}
+
+/* Continuous Light Reflection Shimmer Beam across the button */
+.SPIN::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.65) 50%,
+        transparent 100%
+    );
+    transform: skewX(-25deg);
+    animation: shimmerBeam 2.8s infinite ease-in-out;
+    pointer-events: none;
+}
+
+.SPIN:hover {
+    filter: brightness(1.15) contrast(1.1);
+    letter-spacing: 7px;
+}
+
+.SPIN:active {
+    transform: scale(0.95) translateY(3px) !important;
+    box-shadow: 
+        0 0 15px rgba(255, 0, 85, 0.9),
+        0 4px 12px rgba(0, 0, 0, 0.7),
+        inset 0 3px 8px rgba(0, 0, 0, 0.6) !important;
+    filter: brightness(0.92);
+}
+
+/* ========================================================
+   KEYFRAME ANIMATIONS
+   ======================================================== */
+
+/* RGB Gradient Shift */
+@keyframes rgbShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Continuous Button Breathing & RGB Glow Pulse */
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 
+            0 0 22px rgba(255, 0, 85, 0.75),
+            0 0 45px rgba(255, 0, 85, 0.35),
+            0 8px 25px rgba(0, 0, 0, 0.5),
+            inset 0 2px 4px rgba(255, 255, 255, 0.5),
+            inset 0 -3px 5px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        transform: scale(1.06);
+        box-shadow: 
+            0 0 35px rgba(0, 229, 255, 0.95),
+            0 0 65px rgba(0, 255, 128, 0.5),
+            0 14px 32px rgba(0, 0, 0, 0.5),
+            inset 0 2px 6px rgba(255, 255, 255, 0.8),
+            inset 0 -3px 5px rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 
+            0 0 22px rgba(255, 0, 85, 0.75),
+            0 0 45px rgba(255, 0, 85, 0.35),
+            0 8px 25px rgba(0, 0, 0, 0.5),
+            inset 0 2px 4px rgba(255, 255, 255, 0.5),
+            inset 0 -3px 5px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Continuous Shimmer Light Beam */
+@keyframes shimmerBeam {
+    0% {
+        left: -120%;
+    }
+    30%, 100% {
+        left: 220%;
+    }
+}
+
+/* Box Emoji Floating Idle */
+@keyframes bounceIdle {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.07);
+    }
+}
+/* ========================================================
+   RGB CASINO UI - STYLESHEET
+   ======================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 50% 35%, #181230 0%, #0d091a 50%, #05040a 100%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Ambient dynamic background lighting */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(121, 40, 202, 0.22) 0%, rgba(0, 229, 255, 0.1) 45%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientPulse 7s ease-in-out infinite alternate;
+}
+
+@keyframes ambientPulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.85);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.95;
+    }
+}
+
+/* Wrapper */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+/* Balance (katta box tepasidagi summa) */
+.balance {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 30px;
+    border-radius: 40px;
+    background: linear-gradient(165deg, rgba(28, 22, 54, 0.95) 0%, rgba(13, 10, 26, 0.98) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.7),
+        inset 0 1px 2px rgba(255, 255, 255, 0.15);
+}
+
+.balance-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.balance-value {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: #00ff66;
+    text-shadow: 0 0 14px rgba(0, 255, 102, 0.65);
+}
+
+/* Pul tugaganda - spin tugmasi o'chiriladi */
+.SPIN:disabled {
+    filter: grayscale(0.85) brightness(0.6);
+    cursor: not-allowed;
+    animation: none;
+}
+
+/* Main Cabinet / Panel */
+.inner-box {
+    position: relative;
+    border-radius: 32px;
+    background: linear-gradient(165deg, rgba(28, 22, 54, 0.95) 0%, rgba(13, 10, 26, 0.98) 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 115px);
+    gap: 22px;
+    align-items: center;
+    justify-content: center;
+    padding: 42px 38px;
+    box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.8),
+        inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    z-index: 1;
+}
+
+/* RGB Animated Sharp Border */
+.inner-box::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 35px;
+    background: linear-gradient(
+        60deg,
+        #ff0055,
+        #ff6600,
+        #ffdd00,
+        #00ff66,
+        #00ffff,
+        #0066ff,
+        #9900ff,
+        #ff00aa,
+        #ff0055
+    );
+    background-size: 300% 300%;
+    z-index: -1;
+    animation: rgbShift 5s linear infinite;
+}
+
+/* RGB Animated Neon Glow Halo */
+.inner-box::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 40px;
+    background: linear-gradient(
+        60deg,
+        #ff0055,
+        #ff6600,
+        #ffdd00,
+        #00ff66,
+        #00ffff,
+        #0066ff,
+        #9900ff,
+        #ff00aa,
+        #ff0055
+    );
+    background-size: 300% 300%;
+    z-index: -2;
+    animation: rgbShift 5s linear infinite;
+    filter: blur(25px);
+    opacity: 0.65;
+}
+
+/* Slot Reel Box */
+.box {
+    width: 115px;
+    height: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 35%, rgba(45, 35, 80, 0.9), rgba(15, 12, 30, 0.98));
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease;
+    animation: rgbBoxGlow 6s ease-in-out infinite;
+}
+
+/* Glass reflection shine on top of box */
+.box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 18px 18px 0 0;
+    pointer-events: none;
+}
+
+.box:hover {
+    transform: translateY(-6px) scale(1.04);
+}
+
+/* Emoji / Items styling */
+.win1,
+.win2,
+.win3 {
+    font-size: 52px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ========================================================
+   SPIN PAYTIDA CARD AYLANISHI VA TO'XTASHI
+   ======================================================== */
+
+/* Spin davomida card tez-tez aylanib turadi */
+.box.spinning .win1,
+.box.spinning .win2,
+.box.spinning .win3 {
+    animation: reelRoll 0.28s linear infinite !important;
+}
+
+@keyframes reelRoll {
+    0% {
+        transform: translateY(-45%) scale(1.06);
+        opacity: 0.35;
+        filter: blur(2px);
+    }
+    50% {
+        transform: translateY(0) scale(1.16);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: translateY(45%) scale(1.06);
+        opacity: 0.35;
+        filter: blur(2px);
+    }
+}
+
+/* Card ketma-ket to'xtaganda qarsillab chiqadi */
+.box.stopPop {
+    animation: stopPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes stopPop {
+    0% {
+        transform: scale(1.16);
+        border-color: rgba(0, 255, 102, 0.95);
+        box-shadow:
+            0 0 28px rgba(0, 255, 102, 0.85),
+            inset 0 0 18px rgba(0, 255, 102, 0.35);
+    }
+    100% {
+        transform: scale(1);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: none;
+    }
+}
